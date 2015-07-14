@@ -1,0 +1,26 @@
+{
+  "name": "simple/curl",
+  "description": "curl php tools",
+  "keywords": [
+    "curl",
+    "php"
+  ],
+  "authors": [
+    {
+      "name": "dongyu",
+      "email": "dongyuhappy@gmail.com"
+    }
+  ],
+  "require": {
+    "ext-curl": "*",
+    "symfony/event-dispatcher": "2.7.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Simple\\": "src/Simple/"
+    }
+  }
+}
