@@ -12,6 +12,32 @@ simple-curl是一个简单的把curl操作的类，封装了常用的curl操作�
 - 对于服务器返回的结果信息，必须实现`ResponseValue`接口，该接口里面有一个`toVo`方法，用来解析服务端返回的数据。
 - 具体执行curl请求的相关操作被放在了`Curl`类里面。换句话说`Curl`就是个调度类。
 
+## Composer安装
+
+由于还未提交到Composer的官方仓库里面取，所有要使用以下的方式进行安装。
+
+打开composer.json文件，加入如下内容:
+- 设置repositories
+```json
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/dongyuhappy/curl.git"
+    }
+  ],
+
+
+
+```
+
+- 填入依赖的库
+
+```json
+  "require": {
+    "simple/curl": "0.0.1"
+  }
+```
+
 ## 快速使用
 ```php
 
