@@ -3,7 +3,7 @@
 namespace Simple\Curl\Request;
 
 
-use Simple\Curl\BodyEncoder\FormUrlencoded;
+use Simple\Curl\BodyEncoder\FormUrlEncoder;
 use Simple\Curl\BodyEncoder\GetBodyEncoder;
 use Simple\Curl\BodyEncoder\JsonEncoder;
 use Simple\Curl\BodyEncoder\RequestBodyEncodeType;
@@ -319,7 +319,7 @@ class Request extends EventDispatcher
 
         //www-form-urlencoded
         $bodyEncoder[RequestBodyEncodeType::WWW_FORM_URLENCODED] = function () {
-            $encoder = new FormUrlencoded();
+            $encoder = new FormUrlEncoder();
             return $encoder->toEncode($this->params);
         };
 
@@ -429,7 +429,6 @@ class Request extends EventDispatcher
         if (isset($process[$this->getHttpMethod()])) {
             $process[$this->getHttpMethod()]();
         }
-
-
     }
+
 }

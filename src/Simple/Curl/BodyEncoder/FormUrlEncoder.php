@@ -6,7 +6,7 @@ namespace Simple\Curl\BodyEncoder;
 
 use Simple\Curl\Exception\CurlException;
 
-class FormUrlencoded extends DefaultBodyEncoder
+class FormUrlEncoder extends DefaultBodyEncoder
 {
     /**
      * 对请求的body进行编码
@@ -27,7 +27,7 @@ class FormUrlencoded extends DefaultBodyEncoder
             foreach ($data as $key => $val) {
                 array_push($query, rawurlencode($key) . "=" . rawurlencode($val));
             }
-            return implode("@", $query);
+            return implode("&", $query);
         }
 
         throw new CurlException("无法进行编码的数据");
