@@ -2,7 +2,9 @@
 
 namespace Simple\Curl\Response;
 
+use Simple\Curl\Exception\CurlException;
 use Simple\Curl\Request\Request;
+
 class Response
 {
     /**
@@ -340,15 +342,12 @@ class Response
     }
 
 
-
-
-
-
     /**
      * 填充Response对象
      * @param $ch
      */
-    public function fillResponse($ch){
+    public function fillResponse($ch)
+    {
         $info = curl_getinfo($ch);
         $this->setHttpCode(intval($info["http_code"]));//http状态码
         $this->setTotalTime($info['total_time']);//花费的时间
@@ -363,8 +362,20 @@ class Response
         $this->setLocalPort($info['local_port']);//客户端端口
     }
 
-
-
+    /**
+     * 检查curl请求的结果状态
+     * @throws CurlException
+     */
+    public function check()
+    {
+        if ($this->getErrorCode() != 0) {
+            throw new CurlException("Curl请求错误:" . $this->getErrorCode() . "(" . $this->getErrorMsg() . ")");
+        }
+        $httpCode = $this->getHttpCode();
+        if (in_array(intval($httpCode / 100), array(4, 5))) {
+            throw new CurlException("http状态码错误：" . $httpCode);
+        }
+    }
 
 
 }
