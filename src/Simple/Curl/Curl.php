@@ -147,6 +147,14 @@ class Curl extends EventDispatcher
         return $this->request;
     }
 
+    /**
+     * @param Request $request
+     */
+    public function setRequest($request)
+    {
+        $this->request = $request;
+    }
+
 
 }
 
