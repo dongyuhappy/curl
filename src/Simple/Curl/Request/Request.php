@@ -3,6 +3,7 @@
 namespace Simple\Curl\Request;
 
 
+use Simple\Curl\BodyEncoder\FormDataEncoder;
 use Simple\Curl\BodyEncoder\FormUrlEncoder;
 use Simple\Curl\BodyEncoder\GetBodyEncoder;
 use Simple\Curl\BodyEncoder\JsonEncoder;
@@ -336,6 +337,12 @@ class Request extends EventDispatcher
         //json
         $bodyEncoder[RequestBodyEncodeType::JSON] = function () {
             $encoder = new JsonEncoder();
+            return $encoder->toEncode($this->params);
+        };
+
+        //form-data
+        $bodyEncoder[RequestBodyEncodeType::FORM_DATA] = function(){
+            $encoder = new FormDataEncoder();
             return $encoder->toEncode($this->params);
         };
 
