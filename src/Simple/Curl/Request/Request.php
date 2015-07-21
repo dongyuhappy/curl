@@ -106,6 +106,7 @@ class Request extends EventDispatcher
         $this->addOptions($options);
     }
 
+
     /**
      * http不同方法的一些特性
      * @param $httpMethod
@@ -524,6 +525,18 @@ class Request extends EventDispatcher
             unset($this->header[$key]);
         }
     }
+
+    /**
+     * @param string $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+
+
+
+
 
 
 }
