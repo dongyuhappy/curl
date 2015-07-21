@@ -19,6 +19,14 @@ class Request extends EventDispatcher
 
     const EVENT_HEADER = "CURL_HEADER_";//设置http请求头信息派发的时间名称
 
+
+
+    const EVENT_RESET_COOKIES = "EVENT_RESET_COOKIES";
+
+
+
+
+
     /**
      *
      * @var array
@@ -435,11 +443,87 @@ class Request extends EventDispatcher
      * 重置先关信息
      * @return void
      */
-    public function reset(){
-        $this->cookies = array();
-        $this->params = array();
-        $this->options = array();
-        $this->header = array();//http头信息
+    public function reset()
+    {
+        $this->resetCookies();
+        $this->resetParams();
+        $this->resetOptions();
+        $this->resetHeader();
     }
+
+
+    /**
+     *
+     * @return void
+     */
+    public function resetHeader(){
+        $this->header = array();
+
+    }
+
+    /**
+     * @return void
+     */
+    public function resetOptions(){
+        $this->options = array();
+    }
+
+
+    /**
+     * @return void
+     */
+    public function resetParams(){
+        $this->params = array();
+    }
+
+
+
+    /**
+     * @return void
+     */
+    public function resetCookies(){
+        $this->cookies = array();
+    }
+
+    /**
+     * 删除某个cookie
+     * @param $key
+     */
+    public function removeCookie($key)
+    {
+        if (isset($this->cookies[$key])) {
+            unset($this->cookies[$key]);
+        }
+    }
+
+    /**
+     * @param $key
+     */
+    public function removeParam($key)
+    {
+        if(isset($this->params[$key])){
+            unset($this->params[$key]);
+        }
+    }
+
+    /**
+     * @param $key
+     */
+    public function removeOption($key){
+        if(isset($this->options[$key])){
+            unset($this->options[$key]);
+        }
+    }
+
+    /**
+     *
+     * @param $key
+     */
+    public function removeHeader($key){
+        if(isset($this->header[$key])){
+            unset($this->header[$key]);
+        }
+    }
+
 
 }
