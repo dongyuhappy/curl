@@ -431,4 +431,15 @@ class Request extends EventDispatcher
         }
     }
 
+    /**
+     * 重置先关信息
+     * @return void
+     */
+    public function reset(){
+        $this->cookies = array();
+        $this->params = array();
+        $this->options = array();
+        $this->header = array();//http头信息
+    }
+
 }
