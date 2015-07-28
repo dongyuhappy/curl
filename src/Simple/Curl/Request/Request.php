@@ -125,7 +125,9 @@ class Request extends EventDispatcher
         $process[HttpMethod::POST] = function () {
             $this->setOption(CURLOPT_POST, 1);
         };
-
+        $process[HttpMethod::DELETE] = function(){
+            $this->setOption(CURLOPT_CUSTOMREQUEST,HttpMethod::DELETE);
+        };
         if (isset($process[$httpMethod])) {
             $process[$httpMethod]();
         }
@@ -369,9 +371,10 @@ class Request extends EventDispatcher
             return $this->httpGetMakeQueryString();
         };
 
-        $support[HttpMethod::POST] = function () {
+        $support[HttpMethod::DELETE] = $support[HttpMethod::POST] = function () {
             return $this->httpPostMakeQueryString();
         };
+
 
 
         if (isset($support[$this->httpMethod]) == false) {
@@ -431,13 +434,13 @@ class Request extends EventDispatcher
 
         //http get
         $url = $this->getUrl();
-        $process[HttpMethod::DELETE] = $process[HttpMethod::PUT] = $process[HttpMethod::GET] = function () use ($url) {
+         $process[HttpMethod::PUT] = $process[HttpMethod::GET] = function () use ($url) {
 
             $this->setOption(CURLOPT_URL, $url . '?' . $this->makeQueryString());
         };
 
 
-        $process[HttpMethod::POST] = function () use ($url) {
+        $process[HttpMethod::DELETE] =$process[HttpMethod::POST] = function () use ($url) {
             $this->setOption(CURLOPT_URL, $url);
             $this->setOption(CURLOPT_POSTFIELDS, $this->makeQueryString());
         };
