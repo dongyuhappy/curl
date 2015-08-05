@@ -106,7 +106,7 @@ class Curl extends EventDispatcher
     private function setHeader()
     {
         $headers = $this->request->getHeader();
-        curl_setopt($this->ch, CURLOPT_HEADER, array_values($headers));
+        curl_setopt($this->ch, CURLOPT_HTTPHEADER, array_values($headers));
     }
 
     /**
