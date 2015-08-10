@@ -15,6 +15,7 @@ class HttpMethod
     const POST = "POST";
     const PUT = "PUT";
     const DELETE = "DELETE";
+    const PATCH = "PATCH";
 //    const HEAD = "HEAD";
 //    const OPTIONS = "OPTIONS";
 
@@ -31,6 +32,7 @@ class HttpMethod
             self::POST,
             self::PUT,
             self::DELETE,
+            self::PATCH,
 //            self::HEAD,
 //            self::OPTIONS,
         );

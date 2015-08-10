@@ -5,7 +5,8 @@
  * encoder test
  * Class EncoderTest
  */
-class EncoderTest extends  PHPUnit_Framework_TestCase{
+class EncoderTest extends PHPUnit_Framework_TestCase
+{
 
     /**
      *form-data
@@ -23,10 +24,11 @@ class EncoderTest extends  PHPUnit_Framework_TestCase{
      * www-form-urlencoded
      * @throws \Simple\Curl\Exception\CurlException
      */
-    public function testFormUrlEncoder(){
+    public function testFormUrlEncoder()
+    {
         $encoder = new Simple\Curl\BodyEncoder\FormUrlEncoder();
-        $data = array("name"=>"Messi","age"=>27,"txt"=>"中文");
-        $this->assertEquals("name=Messi&age=27&txt=".urlencode('中文'),$encoder->toEncode($data));
+        $data = array("name" => "Messi", "age" => 27, "txt" => "中文");
+        $this->assertEquals("name=Messi&age=27&txt=" . urlencode('中文'), $encoder->toEncode($data));
 
     }
 
@@ -34,20 +36,22 @@ class EncoderTest extends  PHPUnit_Framework_TestCase{
      * get 编码
      * @throws \Simple\Curl\Exception\CurlException
      */
-    public function testGetBody(){
+    public function testGetBody()
+    {
         $encoder = new Simple\Curl\BodyEncoder\GetBodyEncoder();
-        $data = array("name"=>"Messi","age"=>27,"txt"=>"中文");
-        $this->assertEquals(http_build_query($data),$encoder->toEncode($data));
+        $data = array("name" => "Messi", "age" => 27, "txt" => "中文");
+        $this->assertEquals(http_build_query($data), $encoder->toEncode($data));
     }
 
     /**
      * json测试
      * @throws \Simple\Curl\Exception\CurlException
      */
-    public function testJson(){
+    public function testJson()
+    {
         $encoder = new Simple\Curl\BodyEncoder\JsonEncoder();
-        $data = array("name"=>"Messi","age"=>27,"txt"=>"中文");
-        $this->assertEquals(json_encode($data),$encoder->toEncode($data));
+        $data = array("name" => "Messi", "age" => 27, "txt" => "中文");
+        $this->assertEquals(json_encode($data), $encoder->toEncode($data));
     }
 
 

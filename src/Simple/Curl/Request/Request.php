@@ -21,11 +21,7 @@ class Request extends EventDispatcher
     const EVENT_HEADER = "CURL_HEADER_";//设置http请求头信息派发的时间名称
 
 
-
     const EVENT_RESET_COOKIES = "EVENT_RESET_COOKIES";
-
-
-
 
 
     /**
@@ -125,8 +121,11 @@ class Request extends EventDispatcher
         $process[HttpMethod::POST] = function () {
             $this->setOption(CURLOPT_POST, 1);
         };
-        $process[HttpMethod::DELETE] = function(){
-            $this->setOption(CURLOPT_CUSTOMREQUEST,HttpMethod::DELETE);
+        $process[HttpMethod::DELETE] = function () {
+            $this->setOption(CURLOPT_CUSTOMREQUEST, HttpMethod::DELETE);
+        };
+        $process[HttpMethod::PUT] = function () {
+            $this->setOption(CURLOPT_PUT, 1);
         };
         if (isset($process[$httpMethod])) {
             $process[$httpMethod]();
@@ -343,7 +342,7 @@ class Request extends EventDispatcher
         };
 
         //form-data
-        $bodyEncoder[RequestBodyEncodeType::FORM_DATA] = function(){
+        $bodyEncoder[RequestBodyEncodeType::FORM_DATA] = function () {
             $encoder = new FormDataEncoder();
             return $encoder->toEncode($this->params);
         };
@@ -367,14 +366,16 @@ class Request extends EventDispatcher
 
         $support = array();//支持的http方法
 
-        $process[HttpMethod::DELETE] = $process[HttpMethod::PUT] = $support[HttpMethod::GET] = function () {
+        $support[HttpMethod::GET] = function () {
             return $this->httpGetMakeQueryString();
         };
 
-        $support[HttpMethod::DELETE] = $support[HttpMethod::POST] = function () {
+        $support[HttpMethod::DELETE] =
+        $support[HttpMethod::POST] =
+        $support[HttpMethod::PUT] =
+        $support[HttpMethod::PATCH] = function () {
             return $this->httpPostMakeQueryString();
         };
-
 
 
         if (isset($support[$this->httpMethod]) == false) {
@@ -434,13 +435,13 @@ class Request extends EventDispatcher
 
         //http get
         $url = $this->getUrl();
-         $process[HttpMethod::PUT] = $process[HttpMethod::GET] = function () use ($url) {
+        $process[HttpMethod::GET] = function () use ($url) {
 
             $this->setOption(CURLOPT_URL, $url . '?' . $this->makeQueryString());
         };
 
 
-        $process[HttpMethod::DELETE] =$process[HttpMethod::POST] = function () use ($url) {
+        $process[HttpMethod::PATCH] = $process[HttpMethod::PUT] = $process[HttpMethod::DELETE] = $process[HttpMethod::POST] = function () use ($url) {
             $this->setOption(CURLOPT_URL, $url);
             $this->setOption(CURLOPT_POSTFIELDS, $this->makeQueryString());
         };
@@ -467,7 +468,8 @@ class Request extends EventDispatcher
      *
      * @return void
      */
-    public function resetHeader(){
+    public function resetHeader()
+    {
         $this->header = array();
 
     }
@@ -475,7 +477,8 @@ class Request extends EventDispatcher
     /**
      * @return void
      */
-    public function resetOptions(){
+    public function resetOptions()
+    {
         $this->options = array();
     }
 
@@ -483,16 +486,17 @@ class Request extends EventDispatcher
     /**
      * @return void
      */
-    public function resetParams(){
+    public function resetParams()
+    {
         $this->params = array();
     }
-
 
 
     /**
      * @return void
      */
-    public function resetCookies(){
+    public function resetCookies()
+    {
         $this->cookies = array();
     }
 
@@ -512,7 +516,7 @@ class Request extends EventDispatcher
      */
     public function removeParam($key)
     {
-        if(isset($this->params[$key])){
+        if (isset($this->params[$key])) {
             unset($this->params[$key]);
         }
     }
@@ -520,8 +524,9 @@ class Request extends EventDispatcher
     /**
      * @param $key
      */
-    public function removeOption($key){
-        if(isset($this->options[$key])){
+    public function removeOption($key)
+    {
+        if (isset($this->options[$key])) {
             unset($this->options[$key]);
         }
     }
@@ -530,8 +535,9 @@ class Request extends EventDispatcher
      *
      * @param $key
      */
-    public function removeHeader($key){
-        if(isset($this->header[$key])){
+    public function removeHeader($key)
+    {
+        if (isset($this->header[$key])) {
             unset($this->header[$key]);
         }
     }
@@ -543,7 +549,6 @@ class Request extends EventDispatcher
     {
         $this->url = $url;
     }
-
 
 
 }
